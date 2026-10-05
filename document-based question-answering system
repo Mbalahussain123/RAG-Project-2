@@ -1,0 +1,32 @@
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+from langchain_huggingface import HuggingFaceEmbeddings
+
+loader = PyPDFLoader(
+    r".\3.EmbeddedModels\langchain_rag_sample_10_pages.pdf.pdf"
+)
+
+docs = loader.load()
+splitter=RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=50
+)
+chunk=splitter.split_documents(docs)
+embedding_model = HuggingFaceEmbeddings(
+    model_name="BAAI/bge-small-en-v1.5"
+)
+print("\nEmbedding model loaded!")
+vector_store=FAISS.from_documents(
+    chunk,
+    embedding_model
+)
+retriever=vector_store.as_retriever(
+    search_kwargs=({"k":2})
+)
+question="what is meachine learning?"
+retriever_docs=retriever.invoke(question)
+print("\n relevant information" )
+for doc in retriever_docs:
+   print(doc.page_content)
+
