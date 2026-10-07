@@ -2,7 +2,7 @@ langchain
 langchain-community
 langchain-openai
 langchain-text-splitters
-pypdf
+Pdf plumber 
 faiss-cpu
 python-dotenv
 pip install -r requirements.txt
