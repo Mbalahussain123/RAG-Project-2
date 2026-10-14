@@ -212,6 +212,8 @@ Support document upload through a web interface.
 Improve retrieval evaluation and performance monitoring.
 
 <img width="670" height="370" alt="IMG-20261014-WA0009" src="https://github.com/user-attachments/assets/2fc07de5-fe77-4259-8a18-7d7b67a6ef01" />
-<img width="670" height="370" alt="IMG-20261014-WA0009" src="https://github.com/user-attachments/assets/c4362fad-292d-4a0e-8dc4-80275f9510c2" />
+<img width="736" height="408" alt="IMG-20261014-WA0008" src="https://github.com/user-attachments/assets/dfbf801c-0f0b-46fa-903d-08b290f99832" />
+
+
 
 
