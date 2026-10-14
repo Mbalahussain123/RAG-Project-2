@@ -1,91 +1,214 @@
 
-# RAG-Based Document Question Answering System
+#PDF-Based RAG System Using Hugging Face and LangChain
 
-## Overview
-This project is a Retrieval-Augmented Generation (RAG) application that answers user questions based on information available in PDF documents. It retrieves relevant text from the document and uses a language model to generate answers.
+📌 Project Overview
 
-## Features
-- Load and extract text from PDF documents.
-- Split text into smaller chunks.
-- Generate embeddings using Hugging Face.
-- Store and search embeddings using FAISS.
-- Retrieve relevant document chunks.
-- Generate answers using a Hugging Face language model.
-- Display source PDF page numbers.
-- Handle missing PDFs and common errors.
+This project implements a Retrieval-Augmented Generation (RAG) system that allows users to ask questions about PDF documents and receive answers based on the document's content.
 
-## Technologies Used
-- Python
-- LangChain
-- Hugging Face
-- FAISS
-- Sentence Transformers
-- PyPDFLoader
+It combines semantic search, keyword search, and a reranking model to retrieve relevant information before generating an answer using a locally running Hugging Face language model.
 
-## Project Workflow
-1. Load the PDF document.
-2. Split the extracted text into chunks.
-3. Convert chunks into embeddings.
-4. Store embeddings in FAISS.
-5. Retrieve relevant chunks for the user's question.
-6. Generate an answer using the retrieved context.
-7. Display the answer and source page numbers.
+The system also provides source citations, page numbers, and execution-time metrics.
 
-## Project Structure
-```text
-RAG-Project-2/
-├── app.py
-├── .gitignore
-├── README.md
-├── Requirements.txt
-├── langchain_rag_sample_10_pages.pdf
-```
+✨ Features
 
-## Installation
+PDF Loading: Extract text from PDF documents using PyPDFLoader.
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/Mbalahussain123/RAG-Project-2.git
-cd RAG-Project-2
-```
+Text Chunking: Split documents into smaller chunks using RecursiveCharacterTextSplitter.
 
-### 2. Install dependencies
-```bash
-pip install -r Requirements.txt
-```
+Semantic Search: Retrieve relevant content using Hugging Face embeddings and FAISS.
 
-### 3. Configure the API token
-Create a `.env` file in the project folder:
+Keyword Search: Use BM25Retriever to find relevant text based on keywords.
 
-```text
-HUGGINGFACEHUB_API_TOKEN=your_huggingface_token
-```
+Reranking: Improve retrieval relevance using a Cross-Encoder model.
 
-Replace the placeholder with your Hugging Face token.
+Local LLM: Generate answers using Qwen2.5-1.5B-Instruct.
 
-### 4. Run the application
-```bash
-python app.py
-```
+Source Citations: Display the PDF filename and page number for retrieved sources.
 
-## Example Questions
-- What is Python?
-- What is LangChain?
-- What is RAG?
-- What are embeddings?
-- What is FAISS?
+Unknown Answer Handling: Instruct the model to respond with "I don't know based on the provided document." when the answer is not supported by the context.
 
-## Expected Output
-The application displays an answer based on retrieved PDF content and, when available, the source PDF page numbers.
+Performance Metrics: Measure retrieval time and total response time.
 
-## Future Improvements
-- Support multiple PDF documents.
-- Improve retrieval accuracy.
-- Add a web-based user interface.
-- Evaluate answer quality using test questions.
-- Improve handling of questions not answered by the document.
+🛠️ Technologies Used
 
-- <img width="1185" height="198" alt="IMG-20261012-WA0029" src="https://github.com/user-attachments/assets/6e1cdaae-8529-4095-8acb-69b8454e6760" />
-<img width="1374" height="571" alt="IMG-20261012-WA0030" src="https://github.com/user-attachments/assets/c467b716-d761-403a-ab6c-1ee79f3ce098" />
+Python
 
+LangChain
 
+Hugging Face Transformers
+
+Hugging Face Sentence Transformers
+
+FAISS
+
+BM25
+
+PyPDFLoader
+
+PyTorch
+
+Cross-Encoder
+
+python-dotenv
+
+📂 Project Structure
+
+langchain_models/
+│
+├── 3.EmbeddedModels/
+│   ├── character_loader.py
+│   └── langchain_rag_sample_10_pages.pdf.pdf
+│
+├── faiss_index/
+│   ├── index.faiss
+│   └── index.pkl
+│
+├── .env
+├── requirements.txt
+└── README.md
+
+Note: The FAISS index files are generated when the index is saved. The .env file is optional unless you use environment variables elsewhere in your project.
+
+⚙️ Models Used
+
+Component
+
+Model
+
+Embeddings
+
+BAAI/bge-small-en-v1.5
+
+Language Model
+
+Qwen/Qwen2.5-1.5B-Instruct
+
+Reranker
+
+cross-encoder/ms-marco-MiniLM-L-6-v2
+
+Vector Database
+
+FAISS
+
+🚀 Installation and Setup
+
+1. Clone the Repository
+
+git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+
+Replace YOUR-USERNAME and YOUR-REPOSITORY with your GitHub details.
+
+2. Navigate to the Project Folder
+
+cd YOUR-REPOSITORY
+
+3. Create a Virtual Environment
+
+python -m venv venv
+
+Activate it on Windows PowerShell:
+
+.\venv\Scripts\Activate.ps1
+
+4. Install Dependencies
+
+Install the required packages:
+
+pip install langchain-community langchain-text-splitters langchain-huggingface faiss-cpu sentence-transformers transformers torch pypdf pdfplumber rank-bm25 python-dotenv
+
+5. Add Your PDF
+
+Place your PDF file in the 3.EmbeddedModels directory.
+
+Ensure the PDF path in your Python script matches the actual filename:
+
+PDF_PATH = r"3.EmbeddedModels\langchain_rag_sample_10_pages.pdf.pdf"
+
+6. Run the Application
+
+From the project root directory, run:
+
+python .\3.EmbeddedModels\character_loader.py
+
+The first run may take longer because the embedding, reranker, and language models must be downloaded. A compatible local machine with sufficient memory is required.
+
+💬 Example Usage
+
+After running the application, enter a question:
+
+Ask a question (or type exit): What is machine learning?
+
+The application retrieves relevant PDF content and generates an answer based on the available context.
+
+Example output format:
+
+Answer:
+Machine learning is ... [Source 1]
+
+Sources:
+[Source 1] langchain_rag_sample_10_pages.pdf.pdf - Page 2
+
+Metrics:
+Retrieval time: 0.250 seconds
+Total time: 2.800 seconds
+
+The answer and timing values above are illustrative; actual results depend on your PDF, hardware, and models.
+
+Handling Questions Outside the PDF
+
+If the retrieved context does not support an answer, the application is instructed to respond:
+
+I don't know based on the provided document.
+
+The current implementation relies on the language model's compliance with the prompt, so this behavior is not guaranteed for every question.
+
+🔍 How the RAG Pipeline Works
+
+Load the PDF document.
+
+Split the extracted text into chunks.
+
+Generate embeddings for the chunks.
+
+Store and retrieve vectors using FAISS.
+
+Retrieve keyword matches using BM25.
+
+Combine and rerank the retrieved results.
+
+Build a context containing the relevant document text.
+
+Generate an answer using the local Hugging Face language model.
+
+Display the answer, source pages, and execution metrics.
+
+📊 Benefits
+
+Answers questions using your own PDF documents.
+
+Combines semantic and keyword-based retrieval.
+
+Improves relevance through reranking.
+
+Runs the language model locally after downloading it.
+
+Does not require a paid hosted LLM API for generation.
+
+Provides source information to help users verify answers.
+
+Note: Initial model downloads require an internet connection. Local execution still requires adequate system resources, and the embedding and reranking models also consume memory.
+
+🔮 Future Improvements
+
+Support multiple PDF documents.
+
+Add a Streamlit user interface.
+
+Improve answer verification to reduce hallucinations.
+
+Add conversation history.
+
+Support document upload through a web interface.
+
+Improve retrieval evaluation and performance monitoring.
