@@ -55,17 +55,15 @@ python-dotenv
 
 langchain_models/
 │
-├── 3.EmbeddedModels/
-│   ├── character_loader.py
-│   └── langchain_rag_sample_10_pages.pdf.pdf
+├──character_loader.py
+├── langchain_rag_sample_10_pages.pdf.pdf
 │
 ├── faiss_index/
 │   ├── index.faiss
 │   └── index.pkl
-│
 ├── .env
 ├── requirements.txt
-└── README.md
+└└── README.md── README.md
 
 Note: The FAISS index files are generated when the index is saved. The .env file is optional unless you use environment variables elsewhere in your project.
 
@@ -212,3 +210,8 @@ Add conversation history.
 Support document upload through a web interface.
 
 Improve retrieval evaluation and performance monitoring.
+
+<img width="670" height="370" alt="IMG-20261014-WA0009" src="https://github.com/user-attachments/assets/2fc07de5-fe77-4259-8a18-7d7b67a6ef01" />
+<img width="670" height="370" alt="IMG-20261014-WA0009" src="https://github.com/user-attachments/assets/c4362fad-292d-4a0e-8dc4-80275f9510c2" />
+
+
